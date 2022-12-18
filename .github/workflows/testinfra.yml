@@ -1,0 +1,40 @@
+name: Check Testinfra sample
+on:
+  push:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "docker/**"
+      - "testinfra/**"
+      - ".github/workflows/testinfra.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: "Check"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build container image
+        uses: docker/build-push-action@v3
+        with:
+          file: docker/Dockerfile
+          push: false
+          tags: myimage
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: cd testinfra && python -m venv . && pip install -r requirements.txt
+
+      - name: Run tests
+        run: cd testinfra && source bin/activate && py.test -v test.py
