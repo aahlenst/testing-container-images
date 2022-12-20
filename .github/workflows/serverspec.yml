@@ -1,0 +1,39 @@
+name: Check Serverspec sample
+on:
+  push:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "docker/**"
+      - "serverspec/**"
+      - ".github/workflows/testinfra.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: "Check"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build container image
+        uses: docker/build-push-action@v3
+        with:
+          file: docker/Dockerfile
+          push: false
+          tags: myimage
+      
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108
+        with:
+          ruby-version: '3.1'
+
+      - name: Install dependencies
+        run: cd serverspec && bundle install
+
+      - name: Run tests
+        run: cd serverspec && bundle exec rake
