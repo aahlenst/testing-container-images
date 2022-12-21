@@ -1,0 +1,37 @@
+name: Check Testcontainers sample
+on:
+  push:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "docker/**"
+      - "testcontainers/**"
+      - ".github/workflows/testcontainers.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: "Check"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build container image
+        uses: docker/build-push-action@v3
+        with:
+          file: docker/Dockerfile
+          push: false
+          tags: myimage
+      
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+
+      - name: Run tests
+        run: cd testcontainers && ./jbang test.java
