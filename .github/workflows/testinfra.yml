@@ -2,11 +2,6 @@ name: Check Testinfra sample
 on:
   push:
   pull_request:
-    branches: [ main ]
-    paths:
-      - "docker/**"
-      - "testinfra/**"
-      - ".github/workflows/testinfra.yml"
 
 permissions:
   contents: read

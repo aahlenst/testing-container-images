@@ -2,11 +2,6 @@ name: Check Serverspec sample
 on:
   push:
   pull_request:
-    branches: [ main ]
-    paths:
-      - "docker/**"
-      - "serverspec/**"
-      - ".github/workflows/testinfra.yml"
 
 permissions:
   contents: read
