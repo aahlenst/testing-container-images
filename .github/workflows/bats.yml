@@ -1,0 +1,32 @@
+name: Check Bats sample
+on:
+  push:
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: "Check"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Build container image
+        uses: docker/build-push-action@v3
+        with:
+          file: docker/Dockerfile
+          push: false
+          tags: myimage
+      
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Run tests
+        run: cd bats && bats/bin/bats test.bats
