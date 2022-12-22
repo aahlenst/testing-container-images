@@ -15,7 +15,7 @@ setup() {
 
 @test "nginx workers do not run as root" {
     MASTER_PID=$(docker exec -i $CONTAINER_ID ps -ouser=,pid= -C nginx | awk '($1=="root"){print $2}')
-    RESULT=$(docker exec -e MASTER_PID=$MASTER_PID -i $CONTAINER_ID bash -c 'ps -ouser= --ppid $MASTER_PID | uniq')
+    RESULT=$(docker exec -e MASTER_PID=$MASTER_PID -i $CONTAINER_ID ps -ouser= --ppid $MASTER_PID | uniq)
     assert_equal "$RESULT" "www-data"
 }
 
