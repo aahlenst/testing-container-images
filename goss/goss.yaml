@@ -1,6 +1,8 @@
 package:
   nginx:
     installed: true
+# process check is too limited to properly assess the user of the worker processes. The command
+# check with ps works, but is hard to read. 
 process:
   nginx:
     running: true
@@ -11,6 +13,8 @@ command:
     - www-data
     stderr: []
     timeout: 10000
+# It is impossible to check whether nginx is properly exposed to the host and serves the welcome
+# page because Goss runs on the container. 
 http:
   http://127.0.0.1:80:
     status: 200
