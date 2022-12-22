@@ -1,0 +1,39 @@
+name: Check Goss sample
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: "Check"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Build container image
+        uses: docker/build-push-action@v3
+        with:
+          file: docker/Dockerfile
+          push: false
+          tags: myimage
+      
+      - name: Install goss
+        run: |
+          set -e
+          VERSION=v0.3.20
+          sudo curl -L "https://github.com/goss-org/goss/releases/download/${VERSION}/goss-linux-amd64" -o /usr/local/bin/goss
+          sudo chmod +rx /usr/local/bin/goss
+
+          sudo curl -L "https://github.com/goss-org/goss/releases/download/${VERSION}/dgoss" -o /usr/local/bin/dgoss
+          sudo chmod +rx /usr/local/bin/dgoss
+
+      # To customise the output format, for example, add GOSS_OPTS="-f junit".
+      - name: Run tests
+        run: cd goss && GOSS_PATH=/usr/local/bin/goss dgoss run -p 8080:80 myimage
