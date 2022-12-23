@@ -32,8 +32,9 @@ def test_nginx_is_installed(host):
 
 def test_nginx_workers_do_not_run_as_root(host):
     master = host.process.get(user="root", comm="nginx")
-    workers = host.process.filter(ppid=master.pid, user="www-data")
-    assert len(workers) >= 1
+    workers = host.process.filter(ppid=master.pid)
+    users = set([worker.ruser for worker in workers])
+    assert set(['www-data']) == users
 
 
 def test_nginx_says_welcome(host):
