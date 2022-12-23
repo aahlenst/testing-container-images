@@ -9,6 +9,7 @@
 //DEPS org.junit.jupiter:junit-jupiter-api
 //DEPS org.junit.jupiter:junit-jupiter-engine
 //DEPS org.junit.platform:junit-platform-launcher
+//DEPS org.junit.platform:junit-platform-reporting
 //DEPS org.assertj:assertj-core:3.23.1
 
 import com.github.dockerjava.api.model.ExposedPort;
