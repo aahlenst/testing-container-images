@@ -41,8 +41,8 @@ describe 'myimage' do
   end
 
   # Workaround to ensure nginx workers run as www-data.
-  describe command('ps -U www-data -o command | uniq') do
-    its(:stdout) { should contain('nginx: worker process').after('COMMAND') }
+  describe command('ps -ouser= --ppid $(ps -ouser=,pid= -C nginx | awk \'($1=="root"){print $2}\') | uniq') do
+    its(:stdout) { should eq("www-data\n") }
   end
 
   describe 'Exposed nginx' do
