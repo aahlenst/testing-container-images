@@ -23,7 +23,7 @@ jobs:
           tags: myimage
       
       - name: Set up Ruby
-        uses: ruby/setup-ruby@4b2d1d631efa087f8896c15a0c6023dc2f483198
+        uses: ruby/setup-ruby@8d6236c5db46376078b34bf85d247e3ab767cb95
         with:
           ruby-version: '3.1'
 
