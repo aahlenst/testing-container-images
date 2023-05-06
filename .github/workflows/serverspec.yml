@@ -2,6 +2,9 @@ name: Check Serverspec sample
 on:
   push:
   pull_request:
+  schedule:
+    # Run once per week to ensure that the pipeline is okay.
+    - cron: "19 23 * * 0"
 
 permissions:
   contents: read
