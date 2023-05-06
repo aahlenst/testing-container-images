@@ -3,3 +3,6 @@ source 'https://rubygems.org'
 gem 'rake'
 gem 'serverspec', '~> 2'
 gem 'docker-api'
+
+# https://github.com/upserve/docker-api/issues/583
+gem 'excon', '~> 0.096.0'
