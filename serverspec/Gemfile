@@ -5,4 +5,4 @@ gem 'serverspec', '~> 2'
 gem 'docker-api'
 
 # https://github.com/upserve/docker-api/issues/583
-gem 'excon', '~> 1.1.0'
+gem 'excon', '~> 1.2.0'
