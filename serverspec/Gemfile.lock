@@ -6,7 +6,7 @@ GEM
     docker-api (2.4.0)
       excon (>= 0.64.0)
       multi_json
-    excon (1.2.5)
+    excon (1.2.7)
       logger
     logger (1.2.8.1)
     multi_json (1.15.0)
