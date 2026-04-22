@@ -1,4 +1,4 @@
-FROM debian:trixie-20260406
+FROM debian:trixie-20260421
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
         tini nginx procps
